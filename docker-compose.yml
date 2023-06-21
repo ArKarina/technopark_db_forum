@@ -1,0 +1,20 @@
+# version: '3.4'
+
+# services:
+#   db:
+#     image: db
+#     build:
+#       context: .
+#       dockerfile: ./Dockerfile
+#     ports:
+#       - 5000:5000
+
+version: '3.4'
+
+services:
+  service:
+    container_name: forumServer
+    build:
+      context: .
+    ports:
+      - '5000:5000'
