@@ -141,43 +141,16 @@ create trigger update_vote
 after update on votes for each row execute procedure update_thread_votes();
 
 
--- INDEXES
 create index if not exists index_users_nickname_email on users (nickname, email);
-
---create index if not exists user_forum_forum on forum_users (forum);
 create index if not exists index_user_forum_nickname on forum_users (nickname);
 create index if not exists index_user_forum on forum_users (forum, nickname);
 
---create index if not exists threads_slug on threads (forum);
 create index if not exists index_threads_created on threads (created);
 create index if not exists index_threads_forum_created on threads (forum, created);
 
---create index if not exists posts_id_thread on posts (thread, id);
 create index if not exists index_posts_id_thread on posts (thread, id, parent NULLS FIRST);
 create index if not exists index_posts_id_path_first on posts (path, (path[1]), id);
---create index if not exists posts_path_path1 on posts (path, (path[1]));
 create index if not exists index_posts_id_thread_parent_first on posts ((path[1]), thread, id, parent NULLS FIRST);
---create index if not exists posts_thread on posts (thread);
 create index if not exists index_posts_thread_path on posts (thread, path);
 
 create unique index if not exists index_votes_key on votes (thread, nickname);
-
--- Индексы
--- CREATE INDEX IF NOT EXISTS index_users_nickname ON users USING HASH(nickname);
--- CREATE INDEX IF NOT EXISTS index_users_email ON users USING HASH(email);
--- CREATE INDEX IF NOT EXISTS index_users_email_nickname ON users (email, nickname);
-
--- CREATE INDEX IF NOT EXISTS index_forums_slug ON forums USING HASH(slug);
-
--- CREATE INDEX IF NOT EXISTS index_forum_users_forum_user_nickname ON forum_users (forum_slug, nickname);
-
--- CREATE INDEX IF NOT EXISTS index_threads_slug ON threads USING HASH(slug);
--- CREATE INDEX IF NOT EXISTS index_threads_forum_CREATEd ON threads (forum_slug, created);
-
--- CREATE INDEX IF NOT EXISTS index_posts_thread_id ON posts (thread_id, id);
--- CREATE INDEX IF NOT EXISTS index_posts_path_tree ON posts (path_tree);
--- CREATE INDEX IF NOT EXISTS index_posts_thread_post_tree ON posts (thread_id, path_tree);
--- CREATE INDEX IF NOT EXISTS index_posts_parent_thread_id ON posts (parent_id, thread_id, id);
--- CREATE INDEX IF NOT EXISTS index_posts_post_tree_one_post_tree ON posts ((path_tree[1]), path_tree);
-
-
